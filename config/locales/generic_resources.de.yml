@@ -1,0 +1,7 @@
+de:
+  generic_resources:
+    controller:
+      flash:
+        error:
+          resource_type_missing: "Kein Resourcentyp angegeben"
+          resource_type_not_found: "Der Resourcentyp '%{resource_name}' wurde nicht  gefunden"
