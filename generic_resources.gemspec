@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "rails"
   s.add_runtime_dependency 'gem_config'
+  s.add_runtime_dependency 'kaminari'
 
   s.homepage    = "https://github.com/florianeck/generic_resources"
 end

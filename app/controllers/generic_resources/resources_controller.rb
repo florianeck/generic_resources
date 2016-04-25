@@ -1,14 +1,22 @@
-class GenericResources::ResourcesController < GenericResources.config.parent_controller.to_s.constantize
+class GenericResources::ResourcesController < GenericResources.configuration.parent_controller.to_s.constantize
 
-  before_filter :assign_resource
+  before_filter :assign_resource, except: [:all]
+
+  def all
+
+  end
 
   def index
+
   end
 
   def new
+    @resource = @resource_class.new
+    render layout: nil if request.xhr?
   end
 
   def edit
+    render layout: nil if request.xhr?
   end
 
   def create
@@ -22,6 +30,11 @@ class GenericResources::ResourcesController < GenericResources.config.parent_con
 
   private
 
+  def resource_attributes
+
+  end
+
+
   def assign_resource
     if params[:resource_name].nil?
       flash[:error] = I18n.t('generic_resources.controller.flash.error.resource_type_missing')
@@ -34,8 +47,8 @@ class GenericResources::ResourcesController < GenericResources.config.parent_con
 
       if params[:id]
         @resource       = @resource_class.find(params[:id])
-      else
-        @resources = @resource_class.all
+      elsif params[:action] != 'new'
+        @resources = @resource_class.page(params[:page] || 1).per(GenericResources.configuration.per_page)
       end
     end
   end

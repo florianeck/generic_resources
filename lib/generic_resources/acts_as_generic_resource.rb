@@ -8,12 +8,16 @@ module GenericResources
     end
 
     module ClassMethods
-      def acts_as_generic_resource(permitted_attributes: [])
+      def acts_as_generic_resource(permitted_attributes: [], overview_attributes: [])
         if permitted_attributes.empty?
           permitted_attributes = self.column_names - ['id', 'created_at', 'updated_at']
         end
 
-        GenericResource.register_resource!(self, permitted_attributes: permitted_attributes)
+        if overview_attributes.empty?
+          overview_attributes = permitted_attributes
+        end
+
+        GenericResource.register_resource!(self, permitted_attributes: permitted_attributes, overview_attributes: overview_attributes)
       end
     end
 

@@ -1,0 +1,5 @@
+<%= form_for @resource, url: generic_resources.generic_resources_resource_path, html: { method: :patch} do |f| %>
+  <%= render "generic_resources/resources/forms/#{params[:resource_name]}", f: f %>
+  <br />
+  <%= f.submit t("generic_resources.forms.save_resource", resource_name: @resource_class.model_name.human) %>
+<% end %>

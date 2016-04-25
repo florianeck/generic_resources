@@ -2,11 +2,12 @@ module GenericResource
 
   mattr_accessor :resources
 
-  def self.register_resource!(klass, permitted_attributes: [])
+  def self.register_resource!(klass, permitted_attributes: [], overview_attributes: [])
     @@resources ||= {}
-    @@resources[klass.name.underscore] = {
+    @@resources[klass.name.underscore.gsub("/","_")] = {
       class: klass,
-      permitted_attribues: permitted_attributes
+      permitted_attribues: permitted_attributes,
+      overview_attributes: overview_attributes
     }
   end
 

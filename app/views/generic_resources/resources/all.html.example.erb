@@ -1,0 +1,9 @@
+<div id="dashboard" class="generic-resources-wrapper">
+  <table class="generic-resources-table">
+    <% GenericResource.resources.each do |name, data| %>
+      <tr>
+        <td><%= link_to data[:class].model_name.human, generic_resources.generic_resources_resources_path(resource_name: name) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
