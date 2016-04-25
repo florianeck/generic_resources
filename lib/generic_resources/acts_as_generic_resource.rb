@@ -10,7 +10,7 @@ module GenericResources
     module ClassMethods
       def acts_as_generic_resource(permitted_attributes: [], overview_attributes: [])
         if permitted_attributes.empty?
-          permitted_attributes = self.column_names - ['id', 'created_at', 'updated_at']
+          permitted_attributes = (self.try(:column_names) || []) - ['id', 'created_at', 'updated_at']
         end
 
         if overview_attributes.empty?
