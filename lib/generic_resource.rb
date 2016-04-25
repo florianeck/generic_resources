@@ -6,7 +6,7 @@ module GenericResource
     @@resources ||= {}
     @@resources[klass.name.underscore.gsub("/","_")] = {
       class: klass,
-      permitted_attribues: permitted_attributes,
+      permitted_attributes: permitted_attributes,
       overview_attributes: overview_attributes
     }
   end

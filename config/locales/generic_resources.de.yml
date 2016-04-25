@@ -9,6 +9,11 @@ de:
         error:
           resource_type_missing: "Kein Resourcentyp angegeben"
           resource_type_not_found: "Der Resourcentyp '%{resource_name}' wurde nicht  gefunden"
+          not_created: "%{resource_name} konnte nicht gespeichert werden: %{errors}"
+          not_updated: "%{resource_name} konnte nicht aktualisiert werden: %{errors}"
+        notice:
+          created: "%{resource_name} wurde erfolgreich angelegt"
+          updated: "%{resource_name} wurde erfolgreich aktualisiert"
     forms:
       save_resource: "%{resource_name} speichern"
       create_resource: "%{resource_name} anlegen"

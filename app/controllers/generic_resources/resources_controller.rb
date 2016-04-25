@@ -20,9 +20,26 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   end
 
   def create
+    @resource = @resource_class.new(resource_attributes)
+    if @resource.save
+      flash[:notice] = I18n.t('generic_resources.controller.flash.notice.created', resource_name: @resource_class.model_name.human)
+    else
+      flash[:error] = I18n.t('generic_resources.controller.flash.error.not_created',
+        resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
+    end
+
+    redirect_to generic_resources.url_for(action: 'index', resource_name: params[:resource_name])
   end
 
   def update
+    if @resource.update_attributes(resource_attributes)
+      flash[:notice] = I18n.t('generic_resources.controller.flash.notice.updated', resource_name: @resource_class.model_name.human)
+    else
+      flash[:error] = I18n.t('generic_resources.controller.flash.error.not_updated',
+        resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
+    end
+
+    redirect_to generic_resources.url_for(action: 'index', resource_name: params[:resource_name])
   end
 
   def destroy
@@ -31,7 +48,7 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   private
 
   def resource_attributes
-
+    params.require(params[:resource_name]).permit(*GenericResource.resources[params[:resource_name]][:permitted_attributes])
   end
 
 
@@ -47,7 +64,7 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
 
       if params[:id]
         @resource       = @resource_class.find(params[:id])
-      elsif params[:action] != 'new'
+      elsif params[:action] != 'new' && params[:action] != 'create'
         @resources = @resource_class.page(params[:page] || 1).per(GenericResources.configuration.per_page)
       end
     end
