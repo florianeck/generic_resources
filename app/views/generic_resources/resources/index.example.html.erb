@@ -1,0 +1,21 @@
+<%= link_to t("generic_resources.forms.create_resource", resource_name: @resource_class.model_name.human),
+  generic_resources.new_generic_resources_resource_path, {class: "button fi-plus"} %>
+<table class="process-table">
+  <%= table_head GenericResource.resources[params[:resource_name]][:overview_attributes].map {|a|
+    GenericResource.resources[params[:resource_name]][:class].human_attribute_name(a)
+  } %>
+  <% @resources.each do |resource| %>
+    <tr>
+      <% GenericResource.resources[params[:resource_name]][:overview_attributes].each_with_index do |a,i| %>
+        <td>
+          <% if i == 0 %>
+            <%= link_to resource.send(a), generic_resources.edit_generic_resources_resource_path(resource_name: params[:resource_name], id: resource.id) %>
+          <% else %>
+            <%= resource.send(a) %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<%= paginate(@resources, scope: generic_resources) %>

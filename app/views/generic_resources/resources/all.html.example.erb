@@ -1,9 +1,12 @@
-<div id="dashboard" class="generic-resources-wrapper">
-  <table class="generic-resources-table">
-    <% GenericResource.resources.each do |name, data| %>
-      <tr>
-        <td><%= link_to data[:class].model_name.human, generic_resources.generic_resources_resources_path(resource_name: name) %></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+<table class="generic-resources-table">
+  <%= table_head [t('generic_resources.table_header.resource_name'),
+    t('generic_resources.table_header.resource_description'),
+    t('generic_resources.table_header.resource_count')] %>
+  <% GenericResource.resources.each do |name, data| %>
+    <tr>
+      <td><%= link_to data[:class].model_name.human, generic_resources.generic_resources_resources_path(resource_name: name) %></td>
+      <td><%= t("generic_resources.resource_descriptions.#{name}") %></td>
+      <td><%= data[:class].count %></td>
+    </tr>
+  <% end %>
+</table>
