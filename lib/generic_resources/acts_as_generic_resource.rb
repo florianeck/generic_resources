@@ -9,6 +9,11 @@ module GenericResources
 
     module ClassMethods
       def acts_as_generic_resource(permitted_attributes: [], overview_attributes: [])
+        if !self.table_exists?
+          Rails.logger.warn "Try to add generic resource #{self.name} - table does not exist"
+          return false
+        end
+
         if permitted_attributes.empty?
           permitted_attributes = (self.try(:column_names) || []) - ['id', 'created_at', 'updated_at']
         end
