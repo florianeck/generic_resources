@@ -15,3 +15,4 @@ Add `acts_as_generic_resource` to your model to register it as GenericResource a
 ## Todo
 
 - Write this README file
+- Write Specs / Create Dummy App
