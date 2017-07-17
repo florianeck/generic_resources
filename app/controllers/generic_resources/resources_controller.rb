@@ -7,7 +7,7 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   end
 
   def index
-
+    session["#{@resource_class.to_s.underscore}_page"] = params[:page].present? ? params[:page].to_i : 1
   end
 
   def new
@@ -28,7 +28,7 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
         resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
     end
 
-    redirect_to generic_resources.url_for(action: 'index', resource_name: params[:resource_name])
+    redirect_to_index
   end
 
   def update
@@ -39,7 +39,7 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
         resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
     end
 
-    redirect_to generic_resources.url_for(action: 'index', resource_name: params[:resource_name])
+    redirect_to_index
   end
 
   def destroy
@@ -68,6 +68,11 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
         @resources = @resource_class.page(params[:page] || 1).per(GenericResources.configuration.per_page)
       end
     end
+  end
+
+  def redirect_to_index
+    page = session["#{@resource_class.to_s.underscore}_page"]
+    redirect_to generic_resources.url_for(action: 'index', resource_name: params[:resource_name], page: page)
   end
 
 end
