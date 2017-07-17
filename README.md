@@ -1,4 +1,5 @@
-# Generic Resources
+# Generic Resources [![Gem Version](https://badge.fury.io/rb/generic_resources.svg)](https://badge.fury.io/rb/generic_resources)
+
 
 This gem adds an easy way to provide CRUD functionality for your models without the need to create a scaffold for every of them or even create on single controller!
 
