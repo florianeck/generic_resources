@@ -1,6 +1,6 @@
 class GenericResources::ResourcesController < GenericResources.configuration.parent_controller.to_s.constantize
 
-  before_filter :assign_resource, except: [:all]
+  before_action :assign_resource, except: [:all]
 
   def all
 
