@@ -8,7 +8,10 @@ module GenericResources
     end
 
     module ClassMethods
-      def acts_as_generic_resource(permitted_attributes: [], overview_attributes: [])
+      def acts_as_generic_resource(permitted_attributes: [], overview_attributes: [], deleteable: false)
+        
+        resource_deleteable = true if deleteable == true
+        
         if !self.table_exists?
           Rails.logger.warn "Try to add generic resource #{self.name} - table does not exist"
           return false
@@ -22,7 +25,10 @@ module GenericResources
           overview_attributes = permitted_attributes
         end
 
-        GenericResource.register_resource!(self, permitted_attributes: permitted_attributes, overview_attributes: overview_attributes)
+        GenericResource.register_resource!(self, 
+          permitted_attributes: permitted_attributes, overview_attributes: overview_attributes,
+          resource_deleteable: resource_deleteable
+        )
       end
     end
 

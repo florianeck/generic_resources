@@ -43,6 +43,13 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   end
 
   def destroy
+    if GenericResource.resources[params[:resource_name]][:resource_deleteable]
+      @resource.destroy
+      flash[:notice] = I18n.t('generic_resources.controller.flash.notice.destroyed', resource_name: @resource_class.model_name.human)
+    else
+      flash[:notice] = I18n.t('generic_resources.controller.flash.error.not_destroyed', resource_name: @resource_class.model_name.human)
+    end
+    redirect_to_index
   end
 
   private
