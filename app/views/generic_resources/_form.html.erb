@@ -1,0 +1,9 @@
+<div class="spacer">
+  <%= render "generic_resources/resources/forms/#{params[:resource_name]}", f: f %>
+</div>
+
+<% if defined?(CaptainHooks) %>
+  <div class="spacer"><%= render_captain_hooks_for("generic_resource_form_#{@resource_class.model_name.singular}".to_sym, { f: f} ) %></div>
+<% end %>  
+
+<%= f.submit t("generic_resources.forms.create_resource", resource_name: @resource_class.model_name.human) %>

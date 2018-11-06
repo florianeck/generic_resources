@@ -1,5 +1,3 @@
 <%= form_for @resource, url: generic_resources.generic_resources_resources_path, html: { method: :post} do |f| %>
-  <%= render "generic_resources/resources/forms/#{params[:resource_name]}", f: f %>
-  <br />
-  <%= f.submit t("generic_resources.forms.create_resource", resource_name: @resource_class.model_name.human) %>
+  <%= render "/generic_resources/form", f: f %>
 <% end %>
