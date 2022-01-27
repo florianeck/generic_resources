@@ -14,6 +14,9 @@ de:
         notice:
           created: "%{resource_name} wurde erfolgreich angelegt"
           updated: "%{resource_name} wurde erfolgreich aktualisiert"
+          destroyed: "%{resource_name} wurde erfolgreich gelöscht"
     forms:
       save_resource: "%{resource_name} speichern"
       create_resource: "%{resource_name} anlegen"
+      delete_resource: "Eintrag löschen"
+      delete_confirm: "Sicher? Das löschen kann nicht rückgängig gemacht werden"

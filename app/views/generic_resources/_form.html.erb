@@ -4,6 +4,7 @@
 
 <% if defined?(CaptainHooks) %>
   <div class="spacer"><%= render_captain_hooks_for("generic_resource_form_#{@resource_class.model_name.singular}".to_sym, { f: f} ) %></div>
-<% end %>  
+<% end %>
 
-<%= f.submit t("generic_resources.forms.create_resource", resource_name: @resource_class.model_name.human) %>
+<%= f.submit t("generic_resources.forms.save_resource", resource_name: @resource_class.model_name.human) %>
+

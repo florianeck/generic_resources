@@ -62,10 +62,10 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   def assign_resource
     if params[:resource_name].nil?
       flash[:error] = I18n.t('generic_resources.controller.flash.error.resource_type_missing')
-      redirect_to :back
+      redirect_to action: :index
     elsif GenericResource.resources[params[:resource_name]].nil?
       flash[:error] = I18n.t('generic_resources.controller.flash.error.resource_type_not_found', resource_name: params[:resource_name])
-      redirect_to :back
+      redirect_to action: :index
     else
       @resource_class = GenericResource.resources[params[:resource_name]][:class]
 

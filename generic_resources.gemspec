@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'generic_resources'
-  s.version     = '0.1.9'
+  s.version     = '0.1.10'
   s.license     = "MIT"
   s.summary     = "Easy CRUD Interface for Rails"
-  s.description = "Use just one Controller to CRUD all your resources instead of having lots of of scaffold controllers"
+  s.description = "Use just one Controller to CRUD all your resources instead of having lots of scaffold controllers"
   s.authors     = ["Florian Eck"]
   s.email       = 'florian.eck@el-digital.de'
 
