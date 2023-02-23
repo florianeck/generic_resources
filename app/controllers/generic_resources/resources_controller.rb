@@ -11,7 +11,7 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   end
 
   def new
-    @resource = @resource_class.new
+    @resource = @resource_class.new((session[:generic_resources_attributes][params[:resource_name]] rescue {}))
     render layout: nil if request.xhr?
   end
 
@@ -21,25 +21,12 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
 
   def create
     @resource = @resource_class.new(resource_attributes)
-    if @resource.save
-      flash[:notice] = I18n.t('generic_resources.controller.flash.notice.created', resource_name: @resource_class.model_name.human)
-    else
-      flash[:error] = I18n.t('generic_resources.controller.flash.error.not_created',
-        resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
-    end
-
-    redirect_to_index
+    handle_save!('created')
   end
 
   def update
-    if @resource.update_attributes(resource_attributes)
-      flash[:notice] = I18n.t('generic_resources.controller.flash.notice.updated', resource_name: @resource_class.model_name.human)
-    else
-      flash[:error] = I18n.t('generic_resources.controller.flash.error.not_updated',
-        resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
-    end
-
-    redirect_to_index
+    @resource.assign_attributes(resource_attributes)
+    handle_save!('updated')
   end
 
   def destroy
@@ -55,7 +42,26 @@ class GenericResources::ResourcesController < GenericResources.configuration.par
   private
 
   def resource_attributes
-    params.require(params[:resource_name]).permit(*GenericResource.resources[params[:resource_name]][:permitted_attributes])
+    data = params.require(params[:resource_name]).permit(*GenericResource.resources[params[:resource_name]][:permitted_attributes])
+    session[:generic_resources_attributes] ||= {}
+    session[:generic_resources_attributes][params[:resource_name]] = data
+    return data
+  end
+
+  def clear_resource_attributes!
+    session[:generic_resources_attributes][params[:resource_name]] = {}
+  end
+
+  def handle_save!(type = 'created')
+    if @resource.save
+      flash[:notice] = I18n.t("generic_resources.controller.flash.notice.#{type}", resource_name: @resource_class.model_name.human)
+      clear_resource_attributes!
+    else
+      flash[:error] = I18n.t("generic_resources.controller.flash.error.not_#{type}",
+        resource_name: @resource_class.model_name.human, errors: @resource.errors.messages)
+    end
+
+    redirect_to_index
   end
 
 

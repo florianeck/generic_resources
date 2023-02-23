@@ -13,6 +13,8 @@ module GenericResource
   end
 
 
+
+
   class UnregisteredResourceError < StandardError
 
   end
